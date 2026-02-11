@@ -1,0 +1,10 @@
+# instalar as bibliotecas principais de navegação
+npm  install @react-navigation/native @react-navigation/stack
+
+# instalar as dependencias nativas necessárias para telas e áreas seguras
+npx expo install react-native-screens react-native-safe-area-context
+
+# instalar a biblioteca de gestos (necessária para o Stack Navigator)
+npx expo install react-native-gesture-handler
+
+
