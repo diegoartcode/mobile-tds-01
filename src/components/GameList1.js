@@ -1,71 +1,54 @@
-import { useEffect, useState } from 'react';
 import { TouchableOpacity, Image, View, FlatList, StyleSheet, Text } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-const GameItem = ({ item, navigation }) => {
+const GAMES = [
+    { id: '1', title: 'The Last Guardian', price: 'R$199', discount: '10%', rating: 4.5, image: require('../../assets/icon.png') },
+    { id: '2', title: 'Galactic Odyssey', price: 'R$199', image: require('../../assets/icon.png') },
+    { id: '3', title: 'Costroms', price: 'R$199', discount: '10%',rating: 5, image: require('../../assets/icon.png') },
+    { id: '4', title: 'Orbital Froniter', price: 'R$199', image: require('../../assets/icon.png') }
+];
+
+const GameItem = ({ item }) => {
     return (
-        <TouchableOpacity 
-            style={styles.itemContainer} 
-            onPress={() => navigation.navigate('DetailsView', { product: item })}
-        >
-            <Image source={{ uri: item.image }} style={styles.gameImage} />
+        <TouchableOpacity style={styles.itemContainer}>
+            <Image source={item.image} style={styles.gameImage} />
+
+            {item.discount && (
+                <View style={styles.discountContainer}>
+                    <Text style={styles.discountText}>{item.discount}</Text>
+                </View>
+
+            )}
+
+
 
             <View style={styles.gamePriceContainer}>
-                <Text style={styles.gamePriceText}>
-                    R$ {item.price}
-                    id {item.id}
-                </Text>
+                <Text style={styles.gamePriceText}>{item.price}</Text>
             </View>
-
-            <Text style={styles.gameTitle} numberOfLines={2}>
-                {item.title}
-            </Text>
+            <Text style={styles.gameTitle}>{item.title}</Text>
 
             {item.rating && (
                 <View style={styles.ratingContainer}>
-                    {Array(Math.round(item.rating.rate)).fill(0).map((_, i) => (
-                        <AntDesign key={i} name='star' size={12} color="#ffd700" />
+                    {Array(Math.round(item.rating)).fill(0).map((_, i) => (
+                    <AntDesign key={i} name='star' size={12} color="#ffd700" />
                     ))}
-                    <Text style={styles.ratingText}>
-                        {item.rating.rate}
-                    </Text>
+                    <Text style={styles.ratingText}>{item.rating}</Text>
                 </View>
             )}
+
         </TouchableOpacity>
     );
 }
 
-export default function GameList({ title, navigation }) {
-
-      // Estado que armazena os produtos
-    const [games, setGames] = useState([]);
-    // useEffect executa quando o componente é montado
-    // O [] significa que executa apenas UMA VEZ
-    useEffect(() => {
-        // Faz requisição para API fake
-        fetch('https://fakestoreapi.com/products')
-            // Converte resposta para JSON
-            .then(res => res.json())
-            // Recebe os dados convertidos
-            .then(json => {
-                // Atualiza o estado com os produtos
-                setGames(json);            })
-
-            // Se der erro, mostra no console
-            .catch(error => console.error(error));
-
-    }, []); // array vazio = roda só uma vez
+export default function GameList({ title }) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{title}</Text>
-
             <FlatList
-                data={games}
-                renderItem={({ item }) => (
-                    <GameItem item={item} navigation={navigation} />
-                )}
-                keyExtractor={item => item.id.toString()}
-                horizontal
+                data={GAMES}
+                renderItem={({ item }) => <GameItem item={item} />}
+                keyExtractor={item => item.id}
+                horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.listContent}
             />
