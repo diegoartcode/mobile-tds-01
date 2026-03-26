@@ -2,47 +2,23 @@ import { useEffect, useState } from 'react';
 import { TouchableOpacity, Image, View, FlatList, StyleSheet, Text } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-
-const CapaComFallback = ({ jogoCapa }) => {
-    const [erro, setErro] = useState(false);
-    const API_BASE_URL = "http://10.0.2.2:5203/assets/";
-    const IMAGEM_PADRAO = require('../../assets/icon.png');
-    return (
-        <Image
-            source={erro ? IMAGEM_PADRAO : { url: `${API_BASE_URL}${jogoCapa}` }}
-            style={styles.image}
-            onError={() => setErro(true)}
-            resizeMode='cover'
-        />
-    )
-}
-
-
-
 const GameItem = ({ item, navigation }) => {
     return (
-        <TouchableOpacity
-            style={styles.itemContainer}
+        <TouchableOpacity 
+            style={styles.itemContainer} 
             onPress={() => navigation.navigate('DetailsView', { product: item })}
         >
-            {/* <Image source={{ uri: item.image }} style={styles.gameImage} /> */}
-            <CapaComFallback jogoCapa={item.jogoCapa} />
-             <Image
-            source={erro ? IMAGEM_PADRAO : { url: `${API_BASE_URL}${jogoCapa}` }}
-            style={styles.image}
-            onError={() => setErro(true)}
-            resizeMode='cover'
-        />
+            <Image source={{ uri: item.image }} style={styles.gameImage} />
 
             <View style={styles.gamePriceContainer}>
                 <Text style={styles.gamePriceText}>
-                    R$ {item.jogoPreco}
-
+                    R$ {item.price}
+                    id {item.id}
                 </Text>
             </View>
 
             <Text style={styles.gameTitle} numberOfLines={2}>
-                {item.jogoNome}
+                {item.title}
             </Text>
 
             {item.rating && (
@@ -61,27 +37,24 @@ const GameItem = ({ item, navigation }) => {
 
 export default function GameList({ title, navigation }) {
 
-    // Estado que armazena os produtos
+      // Estado que armazena os produtos
     const [games, setGames] = useState([]);
-
-    const API_URL = "http://10.0.2.2:5203/api/jogos";
-
-    const getGames = async () => {
-        try {
-            const response = await fetch(API_URL);
-            const json = await response.json();
-            setGames(json);
-            console.log(json)
-        } catch {
-            console.log('teste1')
-        }
-    }
-
+    // useEffect executa quando o componente é montado
+    // O [] significa que executa apenas UMA VEZ
     useEffect(() => {
-        getGames();
-    }, []);
+        // Faz requisição para API fake
+        fetch('https://fakestoreapi.com/products')
+            // Converte resposta para JSON
+            .then(res => res.json())
+            // Recebe os dados convertidos
+            .then(json => {
+                // Atualiza o estado com os produtos
+                setGames(json);            })
 
+            // Se der erro, mostra no console
+            .catch(error => console.error(error));
 
+    }, []); // array vazio = roda só uma vez
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{title}</Text>
@@ -91,7 +64,7 @@ export default function GameList({ title, navigation }) {
                 renderItem={({ item }) => (
                     <GameItem item={item} navigation={navigation} />
                 )}
-                keyExtractor={item => item.jogoId.toString()}
+                keyExtractor={item => item.id.toString()}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.listContent}
@@ -101,8 +74,8 @@ export default function GameList({ title, navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginBottom: 30
+    container:{
+        marginBottom:30
     },
     itemContainer: {
         width: 120,
@@ -146,22 +119,22 @@ const styles = StyleSheet.create({
         fontSize: 10,
         fontWeight: 'bold'
     },
-    ratingContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between'
+    ratingContainer:{
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'space-between'
     },
-    ratingText: {
-        color: '#fff',
+    ratingText:{
+        color:'#fff',
         fontStyle: 12,
         paddingLeft: 10
     },
-    title: {
+    title:{
         fontSize: 18,
-        fontWeight: 'bold',
-        color: '#fff',
-        marginLeft: 15,
-        marginBottom: 10
+        fontWeight:'bold',
+        color:'#fff',
+        marginLeft:15,
+        marginBottom:10
     }
 
 })

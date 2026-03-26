@@ -26,7 +26,7 @@ export default function ProfileView({ navigation }) {
                         <MenuItem icon='cart-outline' text='Meus Pedidos' onPress={() => navigation.navigate('MyOrders')} />
                         <MenuItem icon='heart-outline' text='Lista de Desejos' onPress={() => navigation.navigate('Wishlint')} />
                         <MenuItem icon='settings-outline' text='Configurações' onPress={() => navigation.navigate('Settings')} />
-                        <MenuItem icon='help-circle-outline' text='Ajuda e Suporte' onPress={() => navigation.navigate('HelpSupport')} />
+                        <MenuItem icon='help-circle-outline' text='Ajuda e Suporte' onPress={() => navigation.navigate('HelpSupportView')} />
 
                         <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Login')}>
                             <View style={styles.menuItemIcon}>

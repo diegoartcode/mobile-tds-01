@@ -10,6 +10,7 @@ export default function HeaderBar({navigation}) {
             </View>
             <View style={styles.accountContainer}>
                 <TouchableOpacity style={styles.accountButton} onPress={() => navigation.navigate('ProfileView')}>
+                {/* <TouchableOpacity style={styles.accountButton} onPress={() => navigation.navigate('ProfileView')}> */}
                     <Ionicons name='person-circle-outline' size={30} color='#fff' />
                     <Text style={styles.accountText}>Minha conta</Text>
                 </TouchableOpacity>
