@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import {
     View,
     Text,
@@ -29,14 +29,32 @@ const BANNER_IMAGE = require('../../assets/pastel_vegano.jpg');
 // Recebe:
 // route -> parâmetros enviados pela navegação
 // navigation -> controle de navegação
-export default function DetailsView ({ route, navigation }) {
+export default function DetailsView({ route, navigation }) {
 
     // Desestruturação para pegar o produto enviado da tela anterior
-    const { product } = route.params;
+    const { id } = route.params;
 
     // Exibe o produto no console (debug)
-    console.log(product)
+    console.log(id)
 
+    const [jogo, setJogo] = useState(null);
+    const API_URL = `http://10.0.2.2:5203/api/Jogos/${id}`;
+
+    const getJogo = async () => {
+        try {
+            const response = await fetch(API_URL);
+            const json = await response.json();
+            console.log("Jogo carregado: ", json)
+            setJogo(json);         
+        }
+        catch {
+            console.log('teste1')
+        }
+    }
+
+    useEffect(() => {
+        getJogo();
+    }, []);
     return (
 
         <SafeAreaView style={detailsStyles.safeArea}>
@@ -49,7 +67,7 @@ export default function DetailsView ({ route, navigation }) {
                 {/* 2. Banner de Destaque e Nome do Jogo */}
                 <View >
                     <View style={detailsStyles.bannerContainer}>
-                        <Image source={{uri: product?.image}} style={detailsStyles.bannerImage} resizeMode="contain" />
+                        {/* <Image source={{ uri: product?.image }} style={detailsStyles.bannerImage} resizeMode="contain" /> */}
 
                         {/* Conteúdo sobreposto */}
                         <View style={detailsStyles.bannerOverlay}>
@@ -85,19 +103,15 @@ export default function DetailsView ({ route, navigation }) {
                             <MaterialCommunityIcons name="cart" size={20} color="#000" />
                             <Text style={detailsStyles.buyButtonText}>Pré-Venda Digital</Text>
                         </TouchableOpacity>
-                        <Text style={detailsStyles.priceText}>R$ {product?.price}</Text>
+                        {/* <Text style={detailsStyles.priceText}>R$ {product?.price}</Text> */}
                     </View>
                 </View>
-                <Text style={detailsStyles.titleGame}>Nome do Jogo {product?.title}</Text>
+                <Text style={detailsStyles.titleGame}> {jogo?.jogoNome}</Text>
 
                 {/* 5. Descrição do Jogo */}
                 <Text style={detailsStyles.description}>
-                    {product.description}
-                    Immerse yourself destostian funtre metrs gladiatonia, upgrade, upgrade, en deitas peslcs de aera RPG.
-                    Immerse yourself destostian funtre metrs gladiatonia, upgrade, upgrade, en deitas peslcs de aera RPG.
-                    Immerse yourself destostian funtre metrs gladiatonia, upgrade, upgrade, en deitas peslcs de aera RPG.
-                    Immerse yourself destostian funtre metrs gladiatonia, upgrade, upgrade, en deitas peslcs de aera RPG.
-                    Immerse yourself destostian funtre metrs gladiatonia, upgrade, upgrade, en deitas peslcs de aera RPG.
+                    {jogo?.jogoDescricao}
+                    
 
                 </Text>
 
