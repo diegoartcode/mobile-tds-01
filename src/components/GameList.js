@@ -35,6 +35,7 @@ const GameItem = ({ item, navigation }) => {
                         minimumFractionDigits:2,
                         maximumFractionDigits:2
                     })}
+                    
                 </Text>
             </View>
 

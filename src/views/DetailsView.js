@@ -98,12 +98,15 @@ export default function DetailsView({ route, navigation }) {
                 {/* 4. Seleção de Plataformas e Preço */}
                 <View style={detailsStyles.platformPriceContainer}>
                     <ConsoleSelector /> {/* Componente com PS5, XBOX, PC */}
+                    
                     <View style={detailsStyles.priceBox}>
                         <TouchableOpacity style={detailsStyles.buyButton}>
                             <MaterialCommunityIcons name="cart" size={20} color="#000" />
                             <Text style={detailsStyles.buyButtonText}>Pré-Venda Digital</Text>
                         </TouchableOpacity>
-                        {/* <Text style={detailsStyles.priceText}>R$ {product?.price}</Text> */}
+                     
+                        <Text style={detailsStyles.priceText}> R$ 100</Text>
+                       
                     </View>
                 </View>
                 <Text style={detailsStyles.titleGame}> {jogo?.jogoNome}</Text>
