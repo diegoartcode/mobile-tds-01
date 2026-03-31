@@ -111,7 +111,7 @@ export default function DetailsView({ route, navigation }) {
                             <Text style={detailsStyles.buyButtonText}>Pré-Venda Digital</Text>
                         </TouchableOpacity>
 
-                        <Text style={detailsStyles.priceText}> R$ 100</Text>
+                        <Text style={detailsStyles.priceText}> R$ {jogo?.jogoPreco}</Text>
 
                     </View>
                 </View>
