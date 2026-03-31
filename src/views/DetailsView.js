@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -45,7 +45,7 @@ export default function DetailsView({ route, navigation }) {
             const response = await fetch(API_URL);
             const json = await response.json();
             console.log("Jogo carregado: ", json)
-            setJogo(json);         
+            setJogo(json);
         }
         catch {
             console.log('teste1')
@@ -67,7 +67,13 @@ export default function DetailsView({ route, navigation }) {
                 {/* 2. Banner de Destaque e Nome do Jogo */}
                 <View >
                     <View style={detailsStyles.bannerContainer}>
-                        {/* <Image source={{ uri: product?.image }} style={detailsStyles.bannerImage} resizeMode="contain" /> */}
+                        {jogo && (
+                            <Image
+                                source={{ uri: 'http://10.0.2.2:5203/assets/' + jogo.jogoCapa }}
+                                style={detailsStyles.bannerImage}
+                                resizeMode="cover"
+                            />
+                        )}
 
                         {/* Conteúdo sobreposto */}
                         <View style={detailsStyles.bannerOverlay}>
@@ -98,15 +104,15 @@ export default function DetailsView({ route, navigation }) {
                 {/* 4. Seleção de Plataformas e Preço */}
                 <View style={detailsStyles.platformPriceContainer}>
                     <ConsoleSelector /> {/* Componente com PS5, XBOX, PC */}
-                    
+
                     <View style={detailsStyles.priceBox}>
                         <TouchableOpacity style={detailsStyles.buyButton}>
                             <MaterialCommunityIcons name="cart" size={20} color="#000" />
                             <Text style={detailsStyles.buyButtonText}>Pré-Venda Digital</Text>
                         </TouchableOpacity>
-                     
+
                         <Text style={detailsStyles.priceText}> R$ 100</Text>
-                       
+
                     </View>
                 </View>
                 <Text style={detailsStyles.titleGame}> {jogo?.jogoNome}</Text>
@@ -114,12 +120,13 @@ export default function DetailsView({ route, navigation }) {
                 {/* 5. Descrição do Jogo */}
                 <Text style={detailsStyles.description}>
                     {jogo?.jogoDescricao}
-                    
+
 
                 </Text>
 
                 {/* 6. Requisitos de Sistema */}
                 <SystemRequirements />
+
 
                 {/* 7. Avaliações e Notas */}
                 <ReviewsSection />
