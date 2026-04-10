@@ -1,0 +1,31 @@
+npx create-expo-app GeoLocalizacao --template blank
+cd GeoLocalizacao
+npx expo install expo-location
+
+
+ "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package":"com.meuapp.seuapp",
+      "permissions":["ACCESS_FINE_LOCATION","ACCESS_COARSE_LOCATION"]
+    },
+
+
+npm isntall -g eas-cli
+
+eas login
+
+eas build:configure
+
+eas build -p android --profile preview
+
+
+
+npx eas-cli build -p android --porfile preview
+
+npx eas-cli build -p ios --porfile preview
+
+
