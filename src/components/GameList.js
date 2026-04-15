@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 const CapaComFallback = ({ jogoCapa }) => {
     const [erro, setErro] = useState(false);
-    const API_BASE_URL = "http://10.0.2.2:5203/assets/";
+    const API_BASE_URL = "http://gamestito.runasp.net/assets/";
     const IMAGEM_PADRAO = require('../../assets/icon.png');
   
     return (
@@ -62,7 +62,7 @@ export default function GameList({ title, navigation }) {
     // Estado que armazena os produtos
     const [games, setGames] = useState([]);
 
-    const API_URL = "http://10.0.2.2:5203/api/jogos";
+    const API_URL = "http://gamestito.runasp.net/api/jogos";
 
     const getGames = async () => {
         try {

@@ -10,7 +10,7 @@ export default function LoginView({ navigation }) {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
 
-    const API_URL = 'http://10.0.2.2:5203/api/Account/login'
+    const API_URL = 'http://gamestito.runasp.net/api/Account/login'
 
     const handlerLogin = async () => {
         console.log('E-mail: ', email);

@@ -27,7 +27,7 @@ export default function RegisterView({ navigation }) {
             telefone
         });
 
-        const API_URL = 'http://10.0.2.2:5203/api/Account/register';
+        const API_URL = 'http://gamestito.runasp.net/api/Account/register';
 
         if (senha !== confirmarSenha) {
             Alert.alert('Atenção', 'As senhas não coincidem!');

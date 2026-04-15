@@ -1,32 +1,43 @@
-
 using BackEndGamesTito.API.Repositories;
 using BackEndGamesTito.API.Service;
+using BackEndGamesTito.API.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+// Controllers + JSON
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler =
+            System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// DbContext (SQL Server)
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
 
-// Configura��o do CORS (Fundamental para multiplataformas)
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("GamesTitoPolicy", policy =>
     {
-        policy.AllowAnyOrigin() // Permite que o seu sistema web, desktop ou mobile acesse a API
-              .AllowAnyHeader() // Permite qualquer cabe�alho HTTP (tokens e json)
-              .AllowAnyMethod(); // Permite qualquer m�todo HTTP (GET, POST, PUT, DELETE, etc.)
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
+// Injeção de dependência
 builder.Services.AddScoped<UsuarioRepository>();
-
-
+builder.Services.AddScoped<JogoRepository>();
 builder.Services.AddScoped<EmailService>();
-builder.Services.AddScoped<SmsService>(); 
-builder.Services.AddScoped<JogoRepository>(); 
+builder.Services.AddScoped<SmsService>();
 
 var app = builder.Build();
 
@@ -36,13 +47,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-// Habilita o CORS antes do mapeamento dos controllers
-app.UseCors("GamesTitoPolicy"); // ativa a politica antes de tudo
-
 app.UseHttpsRedirection();
-
-// Importante: Habilita o uso de arquivos est�ticos (para a sua p�gina de reset-password)
+app.UseCors("GamesTitoPolicy");
 app.UseStaticFiles();
 
 app.UseAuthorization();
