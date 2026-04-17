@@ -24,8 +24,8 @@ eas build -p android --profile preview
 
 
 
-npx eas-cli build -p android --porfile preview
+npx eas-cli build -p android --profile preview
 
-npx eas-cli build -p ios --porfile preview
+npx eas-cli build -p ios --profile preview
 
 
